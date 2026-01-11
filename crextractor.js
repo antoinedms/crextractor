@@ -15,13 +15,10 @@ const downloadMobileApk = async () => {
 };
 
 const downloadTvApk = async () => {
-  const source = 'https://webservices.aptoide.com/webservices/3/getApkInfo';
-  const body = new FormData();
-  body.append('identif', 'id:72075737');
-  body.append('mode', 'json');
-  const response = await fetch(source, { method: 'POST', body });
+  const source = 'https://web-api-cache.aptoide.com/search?query=com.crunchyroll.crunchyroid';
+  const response = await fetch(source, { method: 'GET'});
   const json = await response.json();
-  const url = json.apk.path;
+  const url = json.datalist.list[0].file.path;
   const filepath = join(process.cwd(), 'crunchyroll.apk');
   await download(url, {
     output: filepath,
